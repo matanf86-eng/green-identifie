@@ -12,11 +12,11 @@
         .splash-icon { font-size: 6em; animation: bounce 1s infinite; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         .splash-title { font-size: 2em; font-weight: bold; color: white; margin-bottom: 10px; }
-        #mainApp { opacity: 0; transition: opacity 0.5s; min-height: 100vh; }
+        #mainApp { opacity: 0; transition: opacity 0.5s; min-height: 100vh; padding-bottom: 40px; }
         #mainApp.visible { opacity: 1; }
         .container { max-width: 600px; margin: 0 auto; padding: 20px; }
         .header { text-align: center; color: white; margin-bottom: 30px; padding-top: 20px; }
-        .card { background: white; border-radius: 24px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+        .card { background: white; border-radius: 24px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); margin-bottom: 20px; }
         .camera-container { width: 100%; aspect-ratio: 4/3; background: #000; border-radius: 20px; overflow: hidden; margin-bottom: 20px; }
         #video { width: 100%; height: 100%; object-fit: cover; }
         #canvas { display: none; }
@@ -29,13 +29,25 @@
         .result-container.show { display: block; }
         .result-icon { font-size: 4em; margin: 20px 0; }
         .result-title { font-size: 2em; font-weight: bold; margin-bottom: 16px; }
-        .result-description { font-size: 1.05em; line-height: 1.7; margin-bottom: 20px; }
+        .result-description { font-size: 1.05em; line-height: 1.7; margin-bottom: 20px; text-align: right; }
         .loading { display: none; text-align: center; padding: 40px; }
         .loading.show { display: block; }
         .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #10b981; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .error { background: #fef2f2; color: #991b1b; padding: 16px; border-radius: 12px; margin-bottom: 16px; display: none; }
         .error.show { display: block; }
+        .facts { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-right: 4px solid #10b981; padding: 20px; border-radius: 16px; margin-bottom: 20px; }
+        .facts h3 { color: #065f46; margin-bottom: 16px; font-size: 1.3em; }
+        .fact-item { display: flex; gap: 12px; margin-bottom: 16px; padding: 12px; background: white; border-radius: 12px; }
+        .fact-item:last-child { margin-bottom: 0; }
+        .fact-icon { font-size: 2em; flex-shrink: 0; }
+        .fact-text { flex: 1; color: #047857; line-height: 1.6; text-align: right; }
+        .fact-text strong { color: #065f46; display: block; margin-bottom: 4px; }
+        .tips { background: #fffbeb; border-right: 4px solid #f59e0b; padding: 20px; border-radius: 16px; }
+        .tips h3 { color: #92400e; margin-bottom: 12px; font-size: 1.1em; }
+        .tips ul { list-style: none; color: #78350f; }
+        .tips li { padding: 8px 0; padding-right: 24px; position: relative; }
+        .tips li:before { content: "✓"; position: absolute; right: 0; color: #f59e0b; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -49,6 +61,44 @@
                 <div class="error" id="error"></div>
                 <div class="loading" id="loading"><div class="spinner"></div><p>מנתח...</p></div>
                 <div class="result-container" id="result"><div class="result-icon" id="resultIcon"></div><div class="result-title" id="resultTitle"></div><div class="result-description" id="resultDescription"></div><button class="btn-primary" onclick="reset()">🔄 בדוק שוב</button></div>
+            </div>
+            <div class="card">
+                <div class="facts">
+                    <h3>🌿 עובדות מעניינות</h3>
+                    <div class="fact-item">
+                        <div class="fact-icon">🤯</div>
+                        <div class="fact-text"><strong>הבלבול הגדול</strong>גם ישראלים ותיקים מתבלבלים! כ-70% מהישראלים מודים שהם לא בטוחים איך להבדיל בין השניים.</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-icon">👃</div>
+                        <div class="fact-text"><strong>הריח הוא המפתח</strong>כוסברה מריחה חזק ומיוחד (יש שאומרים כמו סבון), בעוד שלפטרוזיליה יש ריח עדין יותר.</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-icon">🍃</div>
+                        <div class="fact-text"><strong>צורת העלים</strong>עלי כוסברה מעוגלים ומשוננים, ואילו עלי פטרוזיליה מחודדים יותר ומחולקים לשלוש.</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-icon">🌍</div>
+                        <div class="fact-text"><strong>מוצא עתיק</strong>כוסברה מגיעה ממזרח התיכון ואסיה, ופטרוזיליה ממזרח הים התיכון. שתיהן עתיקות אלפי שנים!</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-icon">🧬</div>
+                        <div class="fact-text"><strong>גנטיקה מוזרה</strong>יש אנשים שגנטית תופסים את טעם הכוסברה כטעם של סבון! זה נובע מגן מסוים ב-DNA.</div>
+                    </div>
+                    <div class="fact-item">
+                        <div class="fact-icon">🥗</div>
+                        <div class="fact-text"><strong>שימושים במטבח</strong>כוסברה מתאימה לסלטים, חומוס וטאבולה. פטרוזיליה מושלמת לתבולה, מרק ועיטור מנות.</div>
+                    </div>
+                </div>
+                <div class="tips">
+                    <h3>💡 טיפים לזיהוי מוצלח</h3>
+                    <ul>
+                        <li>צלמו במקום מואר</li>
+                        <li>הקרבו את העלים למצלמה</li>
+                        <li>נסו להראות מספר עלים</li>
+                        <li>וודאו שהתמונה חדה</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
