@@ -3,550 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>זהה את הירוק - כוסברה או פטרוזיליה?</title>
+    <title>זהה את הירוק</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            color: #333;
-        }
-
-        /* Splash Screen */
-        #splash {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            animation: fadeOut 0.5s ease-out 2.5s forwards;
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-            }
-        }
-
-        .splash-icon {
-            font-size: 8em;
-            margin-bottom: 20px;
-            animation: bounce 1s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .splash-title {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-            margin-bottom: 10px;
-            animation: slideIn 0.8s ease-out;
-        }
-
-        .splash-subtitle {
-            font-size: 1.2em;
-            color: rgba(255,255,255,0.9);
-            animation: slideIn 0.8s ease-out 0.2s backwards;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .splash-loader {
-            margin-top: 40px;
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(255,255,255,0.3);
-            border-top: 5px solid white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        #mainApp {
-            display: none;
-            flex: 1;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .container {
-            flex: 1;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            width: 100%;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            padding-top: 20px;
-        }
-
-        .header h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
-        }
-
-        .camera-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4/3;
-            background: #000;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        #video, #canvas {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        #canvas {
-            display: none;
-        }
-
-        .preview-image {
-            width: 100%;
-            border-radius: 15px;
-            margin-bottom: 15px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            flex: 1;
-            padding: 16px;
-            font-size: 1.1em;
-            font-weight: bold;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .btn-secondary {
-            background: #f3f4f6;
-            color: #333;
-        }
-
-        .btn-secondary:hover {
-            background: #e5e7eb;
-        }
-
-        .result-container {
-            display: none;
-            text-align: center;
-            animation: fadeIn 0.5s;
-        }
-
-        .result-container.show {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-icon {
-            font-size: 5em;
-            margin: 20px 0;
-        }
-
-        .result-title {
-            font-size: 1.8em;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #1f2937;
-        }
-
-        .result-description {
-            font-size: 1.1em;
-            line-height: 1.6;
-            color: #6b7280;
-            margin-bottom: 20px;
-        }
-
-        .confidence {
-            display: inline-block;
-            background: #f3f4f6;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.95em;
-            color: #6b7280;
-            margin-bottom: 15px;
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 30px;
-        }
-
-        .loading.show {
-            display: block;
-        }
-
-        .spinner {
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .error {
-            background: #fee;
-            color: #c00;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            display: none;
-        }
-
-        .error.show {
-            display: block;
-        }
-
-        .tips {
-            background: #fffbeb;
-            border-right: 4px solid #f59e0b;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
-        }
-
-        .tips h3 {
-            color: #92400e;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .tips ul {
-            list-style: none;
-            color: #78350f;
-        }
-
-        .tips li {
-            padding: 5px 0;
-            padding-right: 20px;
-            position: relative;
-        }
-
-        .tips li:before {
-            content: "✓";
-            position: absolute;
-            right: 0;
-            color: #f59e0b;
-            font-weight: bold;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: white;
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, sans-serif; background: linear-gradient(135deg, #10b981 0%, #059669 100%); min-height: 100vh; }
+        #splash { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: linear-gradient(135deg, #10b981 0%, #059669 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s; }
+        #splash.hidden { opacity: 0; pointer-events: none; }
+        .splash-icon { font-size: 6em; animation: bounce 1s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .splash-title { font-size: 2em; font-weight: bold; color: white; margin-bottom: 10px; }
+        #mainApp { opacity: 0; transition: opacity 0.5s; min-height: 100vh; }
+        #mainApp.visible { opacity: 1; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; color: white; margin-bottom: 30px; padding-top: 20px; }
+        .card { background: white; border-radius: 24px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); }
+        .camera-container { width: 100%; aspect-ratio: 4/3; background: #000; border-radius: 20px; overflow: hidden; margin-bottom: 20px; }
+        #video { width: 100%; height: 100%; object-fit: cover; }
+        #canvas { display: none; }
+        .preview-image { width: 100%; border-radius: 20px; margin-bottom: 20px; }
+        .button-group { display: flex; gap: 12px; margin-bottom: 20px; }
+        button { flex: 1; padding: 18px; font-size: 1.15em; font-weight: 600; border: none; border-radius: 16px; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
+        .btn-secondary { background: #f3f4f6; color: #374151; }
+        .result-container { display: none; text-align: center; }
+        .result-container.show { display: block; }
+        .result-icon { font-size: 4em; margin: 20px 0; }
+        .result-title { font-size: 2em; font-weight: bold; margin-bottom: 16px; }
+        .result-description { font-size: 1.05em; line-height: 1.7; margin-bottom: 20px; }
+        .loading { display: none; text-align: center; padding: 40px; }
+        .loading.show { display: block; }
+        .spinner { border: 4px solid #f3f4f6; border-top: 4px solid #10b981; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .error { background: #fef2f2; color: #991b1b; padding: 16px; border-radius: 12px; margin-bottom: 16px; display: none; }
+        .error.show { display: block; }
     </style>
 </head>
 <body>
-    <!-- Splash Screen -->
-    <div id="splash">
-        <div class="splash-icon">🌿</div>
-        <div class="splash-title">זהה את הירוק</div>
-        <div class="splash-subtitle">כוסברה או פטרוזיליה?</div>
-        <div class="splash-loader"></div>
-    </div>
-
-    <!-- Main App -->
+    <div id="splash"><div class="splash-icon">🌿</div><div class="splash-title">זהה את הירוק</div></div>
     <div id="mainApp">
-    <div class="container">
-        <div class="header">
-            <h1>🌿 זהה את הירוק 🌿</h1>
-            <p>כוסברה או פטרוזיליה? נפתור את התעלומה!</p>
-        </div>
-
-        <div class="card">
-            <div id="cameraView">
-                <div class="camera-container">
-                    <video id="video" autoplay playsinline></video>
-                    <canvas id="canvas"></canvas>
-                </div>
-                <div class="button-group">
-                    <button class="btn-primary" onclick="captureAndAnalyze()">
-                        📸 צלם וזהה
-                    </button>
-                </div>
-            </div>
-
-            <div id="photoView" style="display: none;">
-                <img id="preview" class="preview-image" />
-                <div class="button-group">
-                    <button class="btn-primary" onclick="analyzeImage()">
-                        🔍 זהה עכשיו
-                    </button>
-                    <button class="btn-secondary" onclick="retakePhoto()">
-                        🔄 צלם שוב
-                    </button>
-                </div>
-            </div>
-
-            <div class="error" id="error"></div>
-            
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p style="color: #6b7280; font-size: 1.1em;">מנתח את התמונה...</p>
-            </div>
-
-            <div class="result-container" id="result">
-                <div class="result-icon" id="resultIcon"></div>
-                <div class="result-title" id="resultTitle"></div>
-                <div class="result-description" id="resultDescription"></div>
-                <div class="confidence" id="confidence"></div>
-                <button class="btn-primary" onclick="reset()" style="margin-top: 15px;">
-                    🔄 בדוק שוב
-                </button>
-            </div>
-
-            <div class="tips">
-                <h3>💡 טיפים לזיהוי מוצלח:</h3>
-                <ul>
-                    <li>צלמו במקום מואר</li>
-                    <li>הקרבו את העלים למצלמה</li>
-                    <li>נסו להראות מספר עלים</li>
-                    <li>וודאו שהתמונה חדה</li>
-                </ul>
+        <div class="container">
+            <div class="header"><h1>🌿 זהה את הירוק</h1><p>כוסברה או פטרוזיליה?</p></div>
+            <div class="card">
+                <div id="cameraView"><div class="camera-container"><video id="video" autoplay playsinline></video><canvas id="canvas"></canvas></div><div class="button-group"><button class="btn-primary" onclick="captureAndAnalyze()">📸 צלם וזהה</button></div></div>
+                <div id="photoView" style="display: none;"><img id="preview" class="preview-image" /><div class="button-group"><button class="btn-primary" onclick="analyzeImage()">🔍 זהה עכשיו</button><button class="btn-secondary" onclick="retakePhoto()">🔄 צלם שוב</button></div></div>
+                <div class="error" id="error"></div>
+                <div class="loading" id="loading"><div class="spinner"></div><p>מנתח...</p></div>
+                <div class="result-container" id="result"><div class="result-icon" id="resultIcon"></div><div class="result-title" id="resultTitle"></div><div class="result-description" id="resultDescription"></div><button class="btn-primary" onclick="reset()">🔄 בדוק שוב</button></div>
             </div>
         </div>
     </div>
-
-    <div class="footer">
-        נוצר עם ❤️ בעזרת Claude AI
-    </div>
-    </div>
-
     <script>
-        // Splash screen timer
-        setTimeout(() => {
-            document.getElementById('mainApp').style.display = 'flex';
-        }, 3000);
-
-        let stream = null;
-        let capturedImageData = null;
-
-        // Initialize camera
-        async function initCamera() {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { 
-                        facingMode: 'environment',
-                        width: { ideal: 1280 },
-                        height: { ideal: 960 }
-                    } 
-                });
-                document.getElementById('video').srcObject = stream;
-            } catch (error) {
-                showError('לא ניתן לגשת למצלמה. אנא וודאו שנתתם הרשאה.');
-                console.error('Camera error:', error);
-            }
-        }
-
-        // Capture photo
-        function capturePhoto() {
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0);
-
-            return canvas.toDataURL('image/jpeg', 0.8);
-        }
-
-        // Capture and prepare for analysis
-        function captureAndAnalyze() {
-            capturedImageData = capturePhoto();
-            
-            // Show preview
-            document.getElementById('preview').src = capturedImageData;
-            document.getElementById('cameraView').style.display = 'none';
-            document.getElementById('photoView').style.display = 'block';
-            
-            // Stop camera
-            if (stream) {
-                stream.getTracks().forEach(track => track.stop());
-            }
-        }
-
-        // Analyze image with Claude AI
-        async function analyzeImage() {
-            const base64Data = capturedImageData.split(',')[1];
-            
-            document.getElementById('loading').classList.add('show');
-            document.getElementById('error').classList.remove('show');
-            
-            try {
-                const response = await fetch('/api/analyze', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        image: base64Data
-                    })
-                });
-
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error || 'שגיאה בחיבור לשרת');
-                }
-
-                const result = await response.json();
-                displayResult(result);
-                
-            } catch (error) {
-                console.error('Analysis error:', error);
-                showError(error.message || 'אופס! משהו השתבש בזיהוי. נסה שוב.');
-            } finally {
-                document.getElementById('loading').classList.remove('show');
-            }
-        }
-
-        // Display result
-        function displayResult(result) {
-            document.getElementById('photoView').style.display = 'none';
-            
-            const icons = {
-                'כוסברה': '🌿',
-                'פטרוזיליה': '🌱',
-                'לא ברור': '🤔'
-            };
-            
-            const colors = {
-                'כוסברה': '#10b981',
-                'פטרוזיליה': '#3b82f6',
-                'לא ברור': '#f59e0b'
-            };
-            
-            document.getElementById('resultIcon').textContent = icons[result.plant] || '🌿';
-            document.getElementById('resultTitle').textContent = result.plant;
-            document.getElementById('resultTitle').style.color = colors[result.plant] || '#1f2937';
-            document.getElementById('resultDescription').textContent = result.explanation;
-            
-            if (result.distinguishing_features) {
-                document.getElementById('resultDescription').textContent += '\n\n' + result.distinguishing_features;
-            }
-            
-            document.getElementById('confidence').textContent = `רמת ביטחון: ${result.confidence}%`;
-            document.getElementById('result').classList.add('show');
-        }
-
-        // Show error
-        function showError(message) {
-            const errorEl = document.getElementById('error');
-            errorEl.textContent = message;
-            errorEl.classList.add('show');
-        }
-
-        // Retake photo
-        function retakePhoto() {
-            document.getElementById('photoView').style.display = 'none';
-            document.getElementById('cameraView').style.display = 'block';
-            document.getElementById('error').classList.remove('show');
-            initCamera();
-        }
-
-        // Reset
-        function reset() {
-            document.getElementById('result').classList.remove('show');
-            document.getElementById('photoView').style.display = 'none';
-            document.getElementById('cameraView').style.display = 'block';
-            document.getElementById('error').classList.remove('show');
-            capturedImageData = null;
-            initCamera();
-        }
-
-        // Initialize on load
-        window.addEventListener('load', initCamera);
+        let stream=null,capturedImageData=null;
+        setTimeout(()=>{document.getElementById('splash').classList.add('hidden');document.getElementById('mainApp').classList.add('visible');},2500);
+        async function initCamera(){try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});document.getElementById('video').srcObject=stream;}catch(e){showError('לא ניתן לגשת למצלמה');}}
+        function capturePhoto(){const v=document.getElementById('video'),c=document.getElementById('canvas');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);return c.toDataURL('image/jpeg',0.8);}
+        function captureAndAnalyze(){capturedImageData=capturePhoto();document.getElementById('preview').src=capturedImageData;document.getElementById('cameraView').style.display='none';document.getElementById('photoView').style.display='block';if(stream)stream.getTracks().forEach(t=>t.stop());}
+        async function analyzeImage(){document.getElementById('loading').classList.add('show');try{const r=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image:capturedImageData.split(',')[1]})});const d=await r.json();displayResult(d);}catch(e){showError('שגיאה');}finally{document.getElementById('loading').classList.remove('show');}}
+        function displayResult(r){document.getElementById('photoView').style.display='none';const i={'כוסברה':'🌿','פטרוזיליה':'🌱','לא ברור':'🤔'};document.getElementById('resultIcon').textContent=i[r.plant]||'🌿';document.getElementById('resultTitle').textContent=r.plant;document.getElementById('resultDescription').textContent=r.explanation;document.getElementById('result').classList.add('show');}
+        function showError(m){document.getElementById('error').textContent=m;document.getElementById('error').classList.add('show');}
+        function retakePhoto(){document.getElementById('photoView').style.display='none';document.getElementById('cameraView').style.display='block';initCamera();}
+        function reset(){document.getElementById('result').classList.remove('show');retakePhoto();}
+        window.addEventListener('load',()=>setTimeout(initCamera,2500));
     </script>
 </body>
 </html>
