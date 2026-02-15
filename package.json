@@ -1,0 +1,28 @@
+{
+  "name": "green-identifier",
+  "version": "1.0.0",
+  "description": "🌿 זהה את הירוק - אפליקציה לזיהוי כוסברה מול פטרוזיליה",
+  "main": "api/server.js",
+  "scripts": {
+    "start": "node api/server.js",
+    "dev": "nodemon api/server.js"
+  },
+  "keywords": [
+    "cilantro",
+    "parsley",
+    "ai",
+    "claude",
+    "image-recognition",
+    "hebrew"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
